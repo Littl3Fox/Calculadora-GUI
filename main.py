@@ -37,7 +37,7 @@ def verifica(operador):
         if all(op not in atual for op in ["/", "*", "-", "+"]):
             return
 
-    elif operador == ",":
+    elif operador == ".":
         #Caso seja o primeiro número e ele não tem vírgula ainda adiciona uma vírgula
         if all(op not in atual for op in ["/", "*", "-", "+"]) and atual != "":
             if operador not in atual:
@@ -49,9 +49,40 @@ def verifica(operador):
             if operador not in partes[2] and partes[2] != "":
                 operacao.set(atual+operador)
 
-    #TODO(Fazer esse negócio funcionar. Tem que verificar se a operação está correta e tals)            
+   #Realiza a operação em sim          
     elif operador == "=":
-        print(eval(operacao.get()))
+        #Caso esteja vazio só retorna
+        if atual == "":
+            return
+        #Caso só tenha um número e nenhum operador
+        if all(op not in atual for op in ["/", "*", "-", "+"]) and atual != "":
+            return
+        
+        #Caso tenha um operador e só um número
+        else:
+             if atual[-1] in "+-*/":
+                #Vai ser realizada a operação escolhida pelo primeiro número em si
+                partes = re.split(r'(\+|\-|\*|/)', atual)
+
+                #Se for tentada uma divisão por zero 
+                if partes[0].strip('0') == '' and partes[1] == '/':
+                    operacao.set('0')
+                else:
+                    partes[0] = str(float(partes[0]))
+                    operacao.set(eval(partes[0]+partes[1]+partes[0]))
+                    return
+
+        #No mais realiza a operação normalmente, menos se for divisão por 0
+        partes = re.split(r'(\+|\-|\*|/)', atual)
+
+        if partes[0].strip('0') == '' and partes[1] == '/':
+                operacao.set('0')
+        else:
+            partes[0] = str(float(partes[0]))
+            partes[2] =  str(float(partes[2]))
+            
+            operacao.set(eval(partes[0]+partes[1]+partes[2]))
+
     else:
         # Adiciona o operador
         operacao.set(atual + operador)
@@ -100,8 +131,8 @@ def main():
     #Cria o botão da operação resultado
     ttk.Button(frm,text="=",command=lambda: verifica("=")).grid(column=4,row=5)
 
-    #Cria o botão da vírgula
-    ttk.Button(frm,text=",",command=lambda: verifica(",")).grid(column=3,row=5)
+    #Cria o botão da ponto
+    ttk.Button(frm,text=".",command=lambda: verifica(".")).grid(column=3,row=5)
 
 
     root.mainloop()
