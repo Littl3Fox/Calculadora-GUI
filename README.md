@@ -10,6 +10,6 @@ Possui um interface gráfica simples usando a biblioteca tkinter.
 Obs. Eu não validei operações digitadas diretamente pelo usuário via teclado, então muito provável que entradas indevidas sejam possíveis.    
   
 📔 Desafio:  
-Nesse projeto o grande desafio foram as validações a serem realizadas para que ao apertar os botões o usuário não escolhesse operações inválidas.  
+Nesse projeto os desafios foram as validações a serem realizadas para que ao apertar os botões o usuário não escolhesse operações inválidas.  
 
 
